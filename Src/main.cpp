@@ -18,6 +18,9 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include "led.h"
+#include "usart.h"
+
 void usart2_clk()
 {
 	//enable gpio a clock
@@ -61,14 +64,27 @@ void delay()
 
 int main(void)
 {
-	usart2_clk();
+	//enable gpio a clock
+	uint32_t gpioa = (uint32_t)0x40023830;
+	uint32_t clk = (uint32_t)0x40023840;
+	usart usart2(clk, gpioa);
+	usart2.start_clks();
 
 	usart2_init();
-
+	uint32_t rcc = (uint32_t)0x40023830;
+	uint32_t mode = (uint32_t)0x40020c00;
+	uint32_t output = (uint32_t)0x40020c14;
+	rcc_clk_t rcc_pin = GPIOD;
+	pin_t pin15 = PIN_15;
     /* Loop forever */
+	led pin_d(rcc, mode, output, rcc_pin, pin15);
+	pin_d.start_clock();
 	while(1)
 	{
 		usart2_send('x');
+		pin_d.led_on();
+		delay();
+		pin_d.led_off();
 		delay();
 	}
 }

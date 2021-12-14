@@ -1,0 +1,4 @@
+usart.cpp:10:1:usart::usart(uint32_t, uint32_t)	24	static
+usart.cpp:16:6:void usart::start_clks()	24	static
+usart.cpp:25:1:usart::~usart()	16	static
+usart.cpp:25:1:virtual usart::~usart()	16	static
