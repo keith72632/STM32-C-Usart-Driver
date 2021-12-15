@@ -1,5 +1,2 @@
-main.cpp:24:6:void usart2_clk()	16	static
-main.cpp:33:6:void usart2_init()	24	static
-main.cpp:51:6:void usart2_send(char)	24	static
-main.cpp:60:6:void delay()	16	static
-main.cpp:65:5:int main()	80	static
+main.cpp:26:6:void delay()	16	static
+main.cpp:31:5:int main()	72	static

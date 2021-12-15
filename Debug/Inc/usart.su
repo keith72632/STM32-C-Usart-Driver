@@ -1,4 +1,8 @@
-usart.cpp:10:1:usart::usart(uint32_t, uint32_t)	24	static
-usart.cpp:16:6:void usart::start_clks()	24	static
-usart.cpp:25:1:usart::~usart()	16	static
-usart.cpp:25:1:virtual usart::~usart()	16	static
+usart.cpp:10:1:usart::usart(uint32_t, uint32_t, uint32_t, uint32_t)	24	static
+usart.cpp:20:6:void usart::start_clks()	24	static
+usart.cpp:29:6:void usart::gpio_config()	24	static
+usart.cpp:38:6:void usart::usart_config()	32	static
+usart.cpp:51:6:void usart::usart_init()	16	static
+usart.cpp:58:6:void usart::uputc(char)	32	static
+usart.cpp:71:1:usart::~usart()	16	static
+usart.cpp:71:1:virtual usart::~usart()	16	static

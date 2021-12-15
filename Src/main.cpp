@@ -20,42 +20,8 @@
 #include <stdlib.h>
 #include "led.h"
 #include "usart.h"
+#include "main.h"
 
-void usart2_clk()
-{
-	//enable gpio a clock
-	uint32_t *gpioa = (uint32_t*)0x40023830;
-	*gpioa |= (1 << 0);
-	uint32_t *clk = (uint32_t*)0x40023840;
-	*clk |= (1 << 17);
-}
-
-void usart2_init()
-{
-	//configure pins
-	uint32_t *gpioa_mode = (uint32_t*)0x40020000;
-	*gpioa_mode |= (2 << 4) | (2 << 6);
-	uint32_t *gpio_alt = (uint32_t*)0x40020020;
-	*gpio_alt |= (7 << 8) | (7 << 12);
-
-	uint32_t *cr1 = (uint32_t*)0x4000440c;
-	uint32_t *brr = (uint32_t*)0x40004408;
-
-	*cr1 &= 0x00;
-	*cr1 |= (1 << 13);
-	*brr |= (3 << 0) | (104 << 4);
-	*cr1 |= (1 << 2) | (1 << 3);
-
-}
-
-void usart2_send(char c)
-{
-	uint32_t *dr = (uint32_t*)0x40004404;
-	uint32_t *sr = (uint32_t*)0x40004400;
-
-	*dr = c;
-	while(!(*sr & (1<<6)));
-}
 
 void delay()
 {
@@ -65,23 +31,21 @@ void delay()
 int main(void)
 {
 	//enable gpio a clock
-	uint32_t gpioa = (uint32_t)0x40023830;
-	uint32_t clk = (uint32_t)0x40023840;
-	usart usart2(clk, gpioa);
-	usart2.start_clks();
 
-	usart2_init();
-	uint32_t rcc = (uint32_t)0x40023830;
-	uint32_t mode = (uint32_t)0x40020c00;
-	uint32_t output = (uint32_t)0x40020c14;
 	rcc_clk_t rcc_pin = GPIOD;
 	pin_t pin15 = PIN_15;
+
+	usart usart2(USART2_CLK, GPIOA_CLK, GPIOA_MODE, USART2_BASE);
+	usart2.usart_init();
+
+
     /* Loop forever */
-	led pin_d(rcc, mode, output, rcc_pin, pin15);
+	led pin_d(GPIOD_CLK, GPIOD_MODE, GPIOD_ODR, rcc_pin, pin15);
 	pin_d.start_clock();
+
 	while(1)
 	{
-		usart2_send('x');
+		usart2.uputc('X');
 		pin_d.led_on();
 		delay();
 		pin_d.led_off();
