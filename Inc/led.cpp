@@ -6,13 +6,21 @@
  */
 
 #include "led.h"
+#include "main.h"
 
-led::led(uint32_t rcc, uint32_t mode, uint32_t output, uint32_t pin_clk, uint32_t pin_no) {
+led::led(uint32_t gpio, uint32_t pin_no) {
 	// TODO Auto-generated constructor stub
-	_rcc = rcc;
-	_mode = mode;
-	_output = output;
-	_pin_clk = pin_clk;
+	switch(gpio)
+	{
+	case 3:
+		uint32_t base = (uint32_t)GPIOD_BASE;
+		_rcc = GPIOD_CLK;
+		_mode = base;
+		_output = (uint32_t)GPIOD_ODR;
+		_pin_clk = gpio;
+		break;
+	}
+
 	_pin_no = pin_no;
 }
 

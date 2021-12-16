@@ -15,7 +15,7 @@ typedef enum {
 	GPIOB,
 	GPIOC,
 	GPIOD
-}rcc_clk_t;
+}gpio_t;
 
 typedef enum {
 	PIN_0,
@@ -35,6 +35,8 @@ typedef enum {
 	PIN_14,
 	PIN_15,
 }pin_t;
+
+
 class led {
 private:
 	uint32_t _rcc;
@@ -43,7 +45,7 @@ private:
 	uint32_t _pin_clk;
 	uint32_t _pin_no;
 public:
-	led(uint32_t rcc, uint32_t mode, uint32_t output, uint32_t pin_clk, uint32_t pin_no);
+	led(uint32_t gpio, uint32_t pin_no);
 	void start_clock(void);
 	void led_on(void);
 	void led_off(void);

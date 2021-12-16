@@ -32,15 +32,16 @@ int main(void)
 {
 	//enable gpio a clock
 
-	rcc_clk_t rcc_pin = GPIOD;
+	gpio_t gpiod = GPIOD;
 	pin_t pin15 = PIN_15;
+	uart_t usarttwo = USART_2;
 
-	usart usart2(USART2_CLK, GPIOA_CLK, GPIOA_MODE, USART2_BASE);
+	usart usart2(usarttwo);
 	usart2.usart_init();
 
 
     /* Loop forever */
-	led pin_d(GPIOD_CLK, GPIOD_MODE, GPIOD_ODR, rcc_pin, pin15);
+	led pin_d(gpiod, pin15);
 	pin_d.start_clock();
 
 	while(1)
